@@ -1,5 +1,5 @@
 esphome:
-  name: "${name}"
+  name: "${lower_name}"
   friendly_name: "${name}"
   project:
     name: "SenseSwitch by EenerNL"
