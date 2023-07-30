@@ -2,7 +2,7 @@ esphome:
   name: "${lower_name}"
   friendly_name: "${name}"
   project:
-    name: "SenseSwitch by EenerNL"
+    name: "EenerNL.SenseSwitch"
     version: "23.07.01"
 
 esp32:
