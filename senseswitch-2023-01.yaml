@@ -113,3 +113,20 @@ output:
   - id: relay_status_led
     platform: gpio
     pin: 2
+
+
+### CONFIG ENTITIES ###
+
+number:
+  - platform: template
+    name: Minimum Lux
+    id: min_lux
+    entity_category: CONFIG
+    mode: box
+    unit_of_measurement: lx
+    initial_value: 100
+    min_value: 0
+    max_value: 500
+    step: 1
+    optimistic: true
+   
