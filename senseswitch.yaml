@@ -38,7 +38,7 @@ i2c:
 uart:
   tx_pin: GPIO17
   rx_pin: GPIO16
-  baud_rate: 25600
+  baud_rate: 256000
   parity: NONE
   stop_bits: 1
 
