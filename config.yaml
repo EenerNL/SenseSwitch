@@ -1,0 +1,11 @@
+### This is the main config to flash within ESPHome
+
+substitutions:
+  name: SenseSwitch-Test
+
+packages:
+  eenernl.senseswitch: github://EenerNL/SenseSwitch/senseswitch.yaml@main
+  
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
