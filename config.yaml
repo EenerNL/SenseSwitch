@@ -5,6 +5,10 @@ substitutions:
 
 packages:
   eenernl.senseswitch: github://EenerNL/SenseSwitch/senseswitch.yaml@main
+
+api:
+  encryption:
+    key: !secret api_secret_1
   
 wifi:
   ssid: !secret wifi_ssid
