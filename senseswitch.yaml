@@ -114,7 +114,7 @@ sensor:
     still_distance:
       name: "mmWave Still Distance"
     moving_energy:
-      name: "mmWave Moving Energy"
+      name: "mmWave Move Energy"
     still_energy:
       name: "mmWave Still Energy"
     detection_distance:
