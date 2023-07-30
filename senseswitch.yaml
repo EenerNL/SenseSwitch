@@ -144,6 +144,7 @@ binary_sensor:
           - wait_until:
               binary_sensor.is_off: pushbutton
           - switch.turn_off: relay
+ 
   - platform: gpio
     pin:
       number: 18
