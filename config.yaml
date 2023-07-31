@@ -5,7 +5,11 @@ substitutions:
   friendly_name: SenseSwitch
 
 packages:
-  eenernl.senseswitch: github://EenerNL/SenseSwitch/senseswitch.yaml@main
+  eenernl.senseswitch:
+    url: https://github.com/EenerNL/SenseSwitch
+    ref: main
+    file: senseswitch.yaml
+    refresh: 0d
 
 api:
   encryption:
