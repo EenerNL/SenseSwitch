@@ -156,7 +156,7 @@ binary_sensor:
               binary_sensor.is_off: pushbutton
           - switch.turn_off: relay
 
-# Relay output
+# Switch for setting up relay-functionality
   - platform: gpio
     pin:
       number: 18
@@ -180,7 +180,7 @@ binary_sensor:
 ### SWITCHES ###
 switch:
 
-# Switch for setting up relay-functionality
+# Relay output
   - platform: gpio
     pin: 23
     name: "Relay"
