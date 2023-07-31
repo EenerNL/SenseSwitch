@@ -109,8 +109,8 @@ sensor:
       accuracy_decimals: 1
     store_baseline: yes
     baseline:
-      eco2_baseline: 0x955D
-      tvoc_baseline: 0x9C30
+      eco2_baseline: 0x9557
+      tvoc_baseline: 0x9C2F
     address: 0x58
     update_interval: 1s
     compensation:
