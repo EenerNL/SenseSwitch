@@ -10,10 +10,6 @@ packages:
     ref: main
     file: senseswitch.yaml
     refresh: 0d
-
-api:
-  encryption:
-    key: !secret api_secret_1
   
 wifi:
   ssid: !secret wifi_ssid
