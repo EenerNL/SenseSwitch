@@ -1,3 +1,6 @@
+### This config is made by EenerNL
+
+### GLOBAL SETTINGS ###
 esphome:
   name: "${name}"
   friendly_name: "${friendly_name}"
@@ -10,31 +13,27 @@ esp32:
   framework:
     type: arduino
 
-# Enable logging
 logger:
-
 ota:
+captive_portal:
 
 wifi:
-  # ssid: !secret wifi_ssid
-  # password: !secret wifi_password
+#  ssid: !secret wifi_ssid
+#  password: !secret wifi_password
   ap:
     ssid: "${friendly_name}"
-
-captive_portal:
 
 web_server:
   port: 80
   include_internal: true
  
 
-### I2C Bus for Sensors ###
+### I2C Configuration for I2C-sensors ###
 i2c:
   sda: 21
   scl: 22
  
-
-### LD2410C configuration
+### UART Configuration for HLK-LD2410C ###
 uart:
   tx_pin: GPIO17
   rx_pin: GPIO16
@@ -42,6 +41,7 @@ uart:
   parity: NONE
   stop_bits: 1
 
+# HLK-LD2410C Configuration
 ld2410:
   timeout: 30s
   id: mmwave
@@ -67,8 +67,10 @@ ld2410:
   g8_still_threshold: 20      #
   
 
-### Sensors ###
+### SENSORS ###
 sensor:
+
+# BM280 Temperature, Humidity and Pressure
   - platform: bme280
     temperature:
       name: "Temperature"
@@ -86,7 +88,8 @@ sensor:
         - lambda: 'return x + id(hum_offset).state;'
     address: 0x76
     update_interval: 60s
-
+    
+# SGP30 TVOC and eCO2
   - platform: sgp30
     eco2:
       name: "eCO2"
@@ -106,12 +109,14 @@ sensor:
       temperature_source: temperature
       humidity_source: humidity
 
+# BH1720 Illuminance
   - platform: bh1750
     name: "Illuminance"
     id: illuminance
     address: 0x23
     update_interval: 5s
 
+# HLK-LD2410C Measured values
   - platform: ld2410
     moving_distance:
       name: "mmWave Moving Distance"
@@ -125,8 +130,10 @@ sensor:
       name: "mmWave Detection Distance"  
 
 
-### CONTROLLING RELAY ###
+### BINARY SENSORS ###
 binary_sensor:
+
+# Pushbutton for switch relay
   - platform: gpio
     pin:
       number: 19
@@ -148,7 +155,8 @@ binary_sensor:
           - wait_until:
               binary_sensor.is_off: pushbutton
           - switch.turn_off: relay
- 
+
+# Relay output
   - platform: gpio
     pin:
       number: 18
@@ -159,6 +167,7 @@ binary_sensor:
     id: relay_mode
     internal: true
 
+# HLK-LD2410 Occupancy sensors
   - platform: ld2410
     has_target:
       name: "mmWave Presence"
@@ -167,7 +176,11 @@ binary_sensor:
     has_still_target:
       name: "mmWave Still Target"
 
+
+### SWITCHES ###
 switch:
+
+# Switch for setting up relay-functionality
   - platform: gpio
     pin: 23
     name: "Relay"
@@ -177,14 +190,20 @@ switch:
     on_turn_off:
       output.turn_off: relay_status_led
 
+
+### OUTPUTS ###
 output:
+
+# StatusLED for indicating relay-status
   - id: relay_status_led
     platform: gpio
     pin: 2
 
 
-### CONFIG ENTITIES ###
+### NUMBERS ###
 number:
+
+# Setting for minimum lux-value
   - platform: template
     name: "Minimum Lux"
     id: min_lux
@@ -197,6 +216,7 @@ number:
     step: 1
     optimistic: true
 
+# Setting temperature offset for calibrating temperature readings
   - platform: template
     name: "Temperature offset"
     id: temp_offset
@@ -212,6 +232,7 @@ number:
     icon: "mdi:thermometer"
     entity_category: CONFIG
 
+# Setting humidity offset for calibrating humidity readings
   - platform: template
     name: "Humidity offset"
     id: hum_offset
