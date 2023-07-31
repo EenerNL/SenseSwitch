@@ -1,9 +1,5 @@
 ### This is the main config to flash within ESPHome
 
-substitutions:
-  name: senseswitch
-  friendly_name: SenseSwitch
-
 packages:
   eenernl.senseswitch:
     url: https://github.com/EenerNL/SenseSwitch

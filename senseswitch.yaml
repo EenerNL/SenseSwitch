@@ -1,6 +1,10 @@
 ### This config is made by EenerNL
 
 ### GLOBAL SETTINGS ###
+substitutions:
+  name: "senseswitch"
+  friendly_name: "SenseSwitch"
+
 esphome:
   name: "${name}"
   friendly_name: "${friendly_name}"
@@ -19,8 +23,6 @@ ota:
 captive_portal:
 
 wifi:
-#  ssid: !secret wifi_ssid
-#  password: !secret wifi_password
   ap:
     ssid: "${friendly_name}"
 
