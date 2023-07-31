@@ -26,7 +26,15 @@ wifi:
 web_server:
   port: 80
   include_internal: true
- 
+
+dashboard_import:
+  package_import_url: github://eenernl/SenseSwitch/senseswitch.yaml@main
+  import_full_config: false
+
+esp32_improv:
+  authorizer: none
+improv_serial:
+
 
 ### I2C Configuration for I2C-sensors ###
 i2c:
