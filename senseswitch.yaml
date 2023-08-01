@@ -1,6 +1,10 @@
 ### This config is made by EenerNL
 
 ### GLOBAL SETTINGS ###
+substitutions:
+  name: "senseswitch"
+  friendly_name: "SenseSwitch"
+
 esphome:
   name: "${name}"
   friendly_name: "${friendly_name}"
@@ -15,12 +19,11 @@ esp32:
 
 logger:
   level: INFO
+api:
 ota:
 captive_portal:
 
 wifi:
-#  ssid: !secret wifi_ssid
-#  password: !secret wifi_password
   ap:
     ssid: "${friendly_name}"
 
@@ -110,8 +113,8 @@ sensor:
       accuracy_decimals: 1
     store_baseline: yes
     baseline:
-      eco2_baseline: 0x955D
-      tvoc_baseline: 0x9C30
+      eco2_baseline: 0x9557
+      tvoc_baseline: 0x9C2F
     address: 0x58
     update_interval: 1s
     compensation:
