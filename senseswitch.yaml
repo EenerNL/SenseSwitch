@@ -18,7 +18,6 @@ esp32:
     type: arduino
 
 logger:
-  level: INFO
 api:
 ota:
 captive_portal:
