@@ -193,7 +193,10 @@ switch:
 
 # Relay output
   - platform: gpio
-    pin: 23
+    pin:
+      number: 23
+      mode:
+        output: true
     name: "Relay"
     id: relay
     on_turn_on:
