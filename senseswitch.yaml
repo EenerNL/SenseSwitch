@@ -10,7 +10,7 @@ esphome:
   friendly_name: "${friendly_name}"
   project:
     name: "EenerNL.SenseSwitch"
-    version: "2023.8.1"
+    version: "2023.8.2 (dev)"
 
 esp32:
   board: esp32dev
@@ -177,7 +177,6 @@ binary_sensor:
         pulldown: true
     name: "Relay Mode"
     id: relay_mode
-    internal: true
 
 # HLK-LD2410 Occupancy sensors
   - platform: ld2410
