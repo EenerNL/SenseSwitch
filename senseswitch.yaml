@@ -141,11 +141,6 @@ sensor:
       name: "mmWave Detection Distance"  
 
 
-# Board sensors
-  - platform: adc
-    pin: VCC
-    name: "VCC Voltage"
-    internal: true
 
 ### BINARY SENSORS ###
 binary_sensor:
