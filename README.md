@@ -43,5 +43,5 @@ List of actions and wishes:
     - [ ] Switching light based on presence and/or illuminance
     - [ ] Multiple options for the relay-functionality (light, ventilation, covers)
     - [ ] Config entities to configure the relay-functionality
-- [ ] Enable Bluetooth BLE proxy (need to change framework?)
+- [x] Enable Bluetooth BLE proxy (need to change framework?)
 - [ ] Get approval for the 'Made for ESPHome' program
