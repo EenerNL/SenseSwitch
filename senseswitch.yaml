@@ -110,12 +110,10 @@ sensor:
     unit_of_measurement: "m"
   - platform: absolute_humidity
     name: "Absolute Humidity"
-    id: absolute_humidity
     temperature: temperature
     humidity: humidity
   - platform: template
     name: "Dew Point"
-    id: dew_point
     lambda: |-
       return (243.5*(log(id(humidity).state/100)+((17.67*id(temperature).state)/
       (243.5+id(temperature).state)))/(17.67-log(id(humidity).state/100)-
