@@ -143,6 +143,13 @@ sensor:
     id: illuminance
     address: 0x23
     update_interval: 5s
+    on_value_range:
+      - above: id(switch_off_lux).state
+        then:
+          - switch.turn_on: relay
+      - below: id(switch_on_lux).state
+        then:
+          - switch.turn_off: relay
 
 # HLK-LD2410C Measured values
   - platform: ld2410
@@ -248,19 +255,32 @@ output:
 ### NUMBERS ###
 number:
 
-# Setting for minimum lux-value
+# Lux-value for switching on light
   - platform: template
-    name: "Minimum Lux"
-    id: min_lux
+    name: "Switch on lux"
+    id: switch_on_lux
     entity_category: CONFIG
     mode: box
     unit_of_measurement: lx
-    initial_value: 100
+    initial_value: 80
     min_value: 0
     max_value: 500
     step: 1
     optimistic: true
 
+# Lux-value for switching off light
+  - platform: template
+    name: "Switch off lux"
+    id: switch_off_lux
+    entity_category: CONFIG
+    mode: box
+    unit_of_measurement: lx
+    initial_value: 150
+    min_value: 0
+    max_value: 500
+    step: 1
+    optimistic: true
+    
 # Setting temperature offset for calibrating temperature readings
   - platform: template
     name: "Temperature offset"
