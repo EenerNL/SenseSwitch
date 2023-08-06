@@ -144,10 +144,10 @@ sensor:
     address: 0x23
     update_interval: 5s
     on_value_range:
-      - above: id(switch_off_lux).state
+      - above: float(id(switch_off_lux).state)
         then:
           - switch.turn_on: relay
-      - below: id(switch_on_lux).state
+      - below: float(id(switch_on_lux).state)
         then:
           - switch.turn_off: relay
 
