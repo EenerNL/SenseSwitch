@@ -99,7 +99,30 @@ sensor:
         - lambda: 'return x + id(hum_offset).state;'
     address: 0x76
     update_interval: 60s
-    
+  - platform: template
+    name: "Altitude"
+    lambda: |-
+      const float STANDARD_SEA_LEVEL_PRESSURE = 1013.25; //in hPa, see note
+      return ((id(temperature).state + 273.15) / 0.0065) *
+        (powf((STANDARD_SEA_LEVEL_PRESSURE / id(pressure).state), 0.190234) - 1); // in meter
+    update_interval: 15s
+    icon: 'mdi:signal'
+    unit_of_measurement: "m"
+  - platform: absolute_humidity
+    name: "Absolute Humidity"
+    id: absolute_humidity
+    temperature: temperature
+    humidity: humidity
+  - platform: template
+    name: "Dew Point"
+    id: dew_point
+    lambda: |-
+      return (243.5*(log(id(humidity).state/100)+((17.67*id(temperature).state)/
+      (243.5+id(temperature).state)))/(17.67-log(id(humidity).state/100)-
+      ((17.67*id(temperature).state)/(243.5+id(temperature).state))));
+    unit_of_measurement: "°C"
+    icon: 'mdi:thermometer-alert'
+
 # SGP30 TVOC and eCO2
   - platform: sgp30
     eco2:
