@@ -206,7 +206,7 @@ binary_sensor:
       mode:
         input: true
         pulldown: true
-    name: "Relay Mode"
+    name: "Relay Pulsemode"
     id: relay_mode
 
 # HLK-LD2410 Occupancy sensors
