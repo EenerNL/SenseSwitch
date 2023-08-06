@@ -32,7 +32,7 @@ List of actions and wishes:
 - [x] PCB design
 - [x] Prototype on breadboard
 - [x] Writing basic ESPHome config
-- [x] Enable Bluetooth BLE proxy (need to change framework?)
+- [x] Enable Bluetooth BLE proxy (change framework to esp-idf)
 - [ ] Testing hardware and finetunig of config
 - [ ] Finalize PCB design after testing
 - [ ] Review 3D-design of whole device
