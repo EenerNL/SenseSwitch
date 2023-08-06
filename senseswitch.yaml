@@ -147,12 +147,12 @@ sensor:
       then:
         - if:
             condition:
-              - lambda: id(illuminance).state < id(switch_on_lux).state;
+              - lambda: return id(illuminance).state < id(switch_on_lux).state;
             then:
               - switch.turn_on: relay
         - if:
             condition:
-              - lambda: id(illuminance).state > id(switch_off_lux).state;
+              - lambda: return id(illuminance).state > id(switch_off_lux).state;
             then:
               - switch.turn_off: relay
 
