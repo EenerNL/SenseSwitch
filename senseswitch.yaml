@@ -18,9 +18,13 @@ esp32:
     type: esp-idf
 
 logger:
+  level: debug
 api:
 ota:
 captive_portal:
+
+debug:
+  update_interval: 5s
 
 wifi:
   ap:
@@ -147,6 +151,24 @@ sensor:
       name: "mmWave Still Energy"
     detection_distance:
       name: "mmWave Detection Distance"  
+
+# Device debug info
+  - platform: debug
+    free:
+      name: "Heap Free"
+    fragmentation:
+      name: "Heap Fragmentation"
+    block:
+      name: "Heap Max Block"
+    loop_time:
+      name: "Loop Time"
+text_sensor:
+  - platform: debug
+    device:
+      name: "Device Info"
+    reset_reason:
+      name: "Reset Reason"
+
 
 
 
