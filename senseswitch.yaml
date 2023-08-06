@@ -143,13 +143,14 @@ sensor:
     id: illuminance
     address: 0x23
     update_interval: 5s
-    on_value_range:
-      - above: float(id(switch_off_lux).state)
-        then:
-          - switch.turn_on: relay
-      - below: float(id(switch_on_lux).state)
-        then:
-          - switch.turn_off: relay
+    on_value:
+      then:
+        - lambda: |-
+            if id(illuminance).state < float(id(switch_on_lux).state) {
+              id(relay).turn_on;
+            } else {
+              id(relay).turn_off;
+            }
 
 # HLK-LD2410C Measured values
   - platform: ld2410
