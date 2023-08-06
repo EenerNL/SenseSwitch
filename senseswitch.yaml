@@ -152,7 +152,12 @@ sensor:
     detection_distance:
       name: "mmWave Detection Distance"  
 
+# Wifi signal
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
 
+ 
 
 ### TEXT SENSORS
 text_sensor:
@@ -164,6 +169,12 @@ text_sensor:
     reset_reason:
       name: "Reset Reason"
 
+# Wifi info 
+  - platform: wifi_info
+    ip_address:
+      name: WiFi IP Address
+    ssid:
+      name: WiFi SSID
 
 
 ### BINARY SENSORS ###
