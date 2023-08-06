@@ -15,16 +15,12 @@ esphome:
 esp32:
   board: esp32dev
   framework:
-    type: esp-idf
+    type: arduino
 
 logger:
-  level: debug
 api:
 ota:
 captive_portal:
-
-debug:
-  update_interval: 5s
 
 wifi:
   ap:
@@ -164,8 +160,6 @@ text_sensor:
 
 # Wifi info 
   - platform: wifi_info
-    ip_address:
-      name: WiFi IP Address
     ssid:
       name: WiFi SSID
 
