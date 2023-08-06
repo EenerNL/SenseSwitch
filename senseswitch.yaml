@@ -18,9 +18,13 @@ esp32:
     type: esp-idf
 
 logger:
+  level: debug
 api:
 ota:
 captive_portal:
+
+debug:
+  update_interval: 5s
 
 wifi:
   ap:
