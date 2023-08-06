@@ -174,7 +174,6 @@ sensor:
     name: "WiFi Signal"
     update_interval: 60s
 
- 
 
 ### TEXT SENSORS
 text_sensor:
@@ -202,7 +201,7 @@ binary_sensor:
     on_press:
       if:
         condition:
-          binary_sensor.is_off: relay_mode
+          binary_sensor.is_off: relay_pulsemode
         then:
           - switch.toggle: relay
         else:
@@ -219,7 +218,7 @@ binary_sensor:
         input: true
         pulldown: true
     name: "Relay Pulsemode"
-    id: relay_mode
+    id: relay_pulsemode
 
 # HLK-LD2410 Occupancy sensors
   - platform: ld2410
