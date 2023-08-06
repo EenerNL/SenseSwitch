@@ -18,13 +18,9 @@ esp32:
     type: esp-idf
 
 logger:
-  level: debug
 api:
 ota:
 captive_portal:
-
-debug:
-  update_interval: 5s
 
 wifi:
   ap:
@@ -161,13 +157,6 @@ sensor:
 
 ### TEXT SENSORS
 text_sensor:
-
-# Device debug info
-  - platform: debug
-    device:
-      name: "Device Info"
-    reset_reason:
-      name: "Reset Reason"
 
 # Wifi info 
   - platform: wifi_info
