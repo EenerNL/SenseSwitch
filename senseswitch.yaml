@@ -147,12 +147,16 @@ sensor:
       then:
         - if:
             condition:
-              - lambda: return id(illuminance).state < id(switch_on_lux).state;
+              and:
+                - lambda: return id(switch_mode).state == "Lux";
+                - lambda: return id(illuminance).state < id(switch_on_lux).state;
             then:
               - switch.turn_on: relay
         - if:
             condition:
-              - lambda: return id(illuminance).state > id(switch_off_lux).state;
+              and:
+                - lambda: return id(switch_mode).state == "Lux";
+                - lambda: return id(illuminance).state > id(switch_off_lux).state;
             then:
               - switch.turn_off: relay
 
@@ -219,6 +223,7 @@ binary_sensor:
         pulldown: true
     name: "Relay Pulsemode"
     id: relay_pulsemode
+    entity_category: CONFIG
 
 # HLK-LD2410 Occupancy sensors
   - platform: ld2410
@@ -316,3 +321,17 @@ number:
     initial_value: 0
     icon: "mdi:water-percent"
     entity_category: CONFIG
+
+
+### SELECTORS ###
+select:
+
+# Mode
+  - platform: template
+    name: "Switch Mode"
+    id: switch_mode
+    optimistic: true
+    options:
+      - Off
+      - Lux
+    initial_value: Off
