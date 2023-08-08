@@ -147,10 +147,16 @@ sensor:
       then:
         - if:
             condition:
-              and:
-                - lambda: return id(switch_mode).state == "Lux";
-                - lambda: return id(illuminance).state < id(switch_on_lux).state;
-                - switch.is_off: relay
+              or:
+                - and:
+                    - lambda: return id(switch_mode).state == "Lux + Presence";
+                    - lambda: return id(illuminance).state < id(switch_on_lux).state;
+                    - switch.is_off: relay
+                    - binary_sensor.is_on: mmwave_presence
+                - and:
+                    - lambda: return id(switch_mode).state == "Lux";
+                    - lambda: return id(illuminance).state < id(switch_on_lux).state;
+                    - switch.is_off: relay
             then:
               - switch.turn_on: relay
         - if:
@@ -231,6 +237,7 @@ binary_sensor:
   - platform: ld2410
     has_target:
       name: "mmWave Presence"
+      id: mmwave_presence
     has_moving_target:
       name: "mmWave Moving Target"
     has_still_target:
@@ -338,6 +345,7 @@ select:
     options:
       - "Off"
       - "Lux"
+      - "Lux + Presence"
     entity_category: CONFIG
     restore_value: true
     on_value:
