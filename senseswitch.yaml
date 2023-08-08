@@ -334,4 +334,4 @@ select:
     options:
       - "Off"
       - "Lux"
-    initial_value: "Off"
+    initial_option: "Off"
