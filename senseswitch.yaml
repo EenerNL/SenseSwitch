@@ -150,6 +150,7 @@ sensor:
               and:
                 - lambda: return id(switch_mode).state == "Lux";
                 - lambda: return id(illuminance).state < id(switch_on_lux).state;
+                - switch.is_off: relay
             then:
               - switch.turn_on: relay
         - if:
@@ -157,8 +158,9 @@ sensor:
               and:
                 - lambda: return id(switch_mode).state == "Lux";
                 - lambda: return id(illuminance).state > id(switch_off_lux).state;
+                - switch.is_on: relay
             then:
-              - switch.turn_off: relay
+              - switch.turn_off: relay 
 
 # HLK-LD2410C Measured values
   - platform: ld2410
@@ -337,4 +339,12 @@ select:
       - "Off"
       - "Lux"
     entity_category: CONFIG
-    restore_value: true 
+    restore_value: true
+    on_value:
+      if:
+        condition:
+          and:
+            - lambda: return x == "Off";
+            - switch.is_on: relay
+        then:
+          - switch.turn_off: relay
