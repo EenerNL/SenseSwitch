@@ -334,7 +334,7 @@ select:
     id: switch_mode
     optimistic: true
     options:
-      - 'Off'
-      - 'Lux'
+      - "Off"
+      - "Lux"
     entity_category: CONFIG
     restore_value: true 
