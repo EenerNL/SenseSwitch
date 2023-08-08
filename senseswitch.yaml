@@ -319,3 +319,15 @@ number:
     initial_value: 0
     icon: "mdi:water-percent"
     entity_category: CONFIG
+
+
+### SELECTORS ###
+select:
+
+# Mode
+  - platform: template
+    name: "Switch Mode"
+    optimistic: true
+    options:
+      - off
+      - lux
