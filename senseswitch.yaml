@@ -267,7 +267,7 @@ switch:
     id: relay
     on_turn_on:
       then:
-        - if
+        - if:
             condition:
               binary_sensor.is_on: relay_pulsemode
             then:
