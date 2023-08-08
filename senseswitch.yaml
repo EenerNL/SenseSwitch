@@ -147,12 +147,16 @@ sensor:
       then:
         - if:
             condition:
-              - lambda: return id(illuminance).state < id(switch_on_lux).state;
+              and:
+                - lambda: return id(switch_mode).state == 'Lux';
+                - lambda: return id(illuminance).state < id(switch_on_lux).state;
             then:
               - switch.turn_on: relay
         - if:
             condition:
-              - lambda: return id(illuminance).state > id(switch_off_lux).state;
+              and:
+                - lambda: return id(switch_mode).state == 'Lux';
+                - lambda: return id(illuminance).state > id(switch_off_lux).state;
             then:
               - switch.turn_off: relay
 
@@ -329,5 +333,7 @@ select:
     name: "Switch Mode"
     optimistic: true
     options:
-      - 'off'
-      - 'lux'
+      - 'Off'
+      - 'Lux'
+    entity_category: CONFIG
+    restore_value: true 
