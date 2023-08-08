@@ -332,6 +332,6 @@ select:
     id: switch_mode
     optimistic: true
     options:
-      - Off
-      - Lux
-    initial_value: Off
+      - "Off"
+      - "Lux"
+    initial_value: "Off"
