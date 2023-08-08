@@ -331,6 +331,7 @@ select:
 # Mode
   - platform: template
     name: "Switch Mode"
+    id: switch_mode
     optimistic: true
     options:
       - 'Off'
