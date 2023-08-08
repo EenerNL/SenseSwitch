@@ -35,7 +35,7 @@ esp32_ble_tracker:
 bluetooth_proxy:
   active: true
 
-# web_server:
+# web_server:               ## Disabled to free up memory and more stability
 #  port: 80
 #  include_internal: true
 
@@ -48,12 +48,12 @@ esp32_improv:
 improv_serial:
 
 
-### I2C Configuration for I2C-sensors ###
+# I2C Configuration for I2C-sensors
 i2c:
   sda: 21
   scl: 22
  
-### UART Configuration for HLK-LD2410C ###
+# UART Configuration for HLK-LD2410C
 uart:
   tx_pin: GPIO17
   rx_pin: GPIO16
@@ -87,6 +87,7 @@ ld2410:
   g8_still_threshold: 20      #
   
 
+# ----------- #
 ### SENSORS ###
 sensor:
 
@@ -146,7 +147,7 @@ sensor:
     on_value:
       then:
         - if:
-            condition:
+            condition: # switch on conditions
               or:
                 - and:
                     - lambda: return id(switch_mode).state == "Lux + Presence";
@@ -160,11 +161,17 @@ sensor:
             then:
               - switch.turn_on: relay
         - if:
-            condition:
-              and:
-                - lambda: return id(switch_mode).state == "Lux";
-                - lambda: return id(illuminance).state > id(switch_off_lux).state;
-                - switch.is_on: relay
+            condition: # switch off conditions
+              or:
+                - and:
+                    - lambda: return id(switch_mode).state == "Lux + Presence";
+                    - lambda: return id(illuminance).state < id(switch_off_lux).state;
+                    - switch.is_on: relay
+                    - binary_sensor.is_off: mmwave_presence 
+                - and:
+                    - lambda: return id(switch_mode).state == "Lux";
+                    - lambda: return id(illuminance).state > id(switch_off_lux).state;
+                    - switch.is_on: relay
             then:
               - switch.turn_off: relay 
 
@@ -187,6 +194,7 @@ sensor:
     update_interval: 60s
 
 
+# ------------ #
 ### TEXT SENSORS
 text_sensor:
 
@@ -196,6 +204,7 @@ text_sensor:
       name: WiFi SSID
 
 
+# ------------------ #
 ### BINARY SENSORS ###
 binary_sensor:
 
@@ -244,6 +253,7 @@ binary_sensor:
       name: "mmWave Still Target"
 
 
+# ------------ #
 ### SWITCHES ###
 switch:
 
@@ -261,6 +271,7 @@ switch:
       output.turn_off: relay_status_led
 
 
+# ----------- #
 ### OUTPUTS ###
 output:
 
@@ -270,6 +281,7 @@ output:
     pin: 2
 
 
+# ----------- #
 ### NUMBERS ###
 number:
 
@@ -334,6 +346,7 @@ number:
     entity_category: CONFIG
 
 
+# ------------- #
 ### SELECTORS ###
 select:
 
