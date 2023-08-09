@@ -387,7 +387,7 @@ script:
             or:
               - and:  # Mode = Lux + Presence
                   - lambda: return id(switch_mode).state == "Lux + Presence";
-                  - lambda: return id(illuminance).state < id(switch_off_lux).state;
+                  - lambda: return id(illuminance).state > id(switch_off_lux).state;
                   - switch.is_on: relay
                   - binary_sensor.is_off: mmwave_presence 
               - and:  # Mode = Lux
