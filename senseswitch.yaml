@@ -247,14 +247,7 @@ switch:
     name: "Relay"
     id: relay
     on_turn_on:
-      then:
-        - if:
-            condition:
-              binary_sensor.is_on: relay_pulsemode
-            then:
-              - delay: 1s
-              - switch.turn_off: relay
-        - output.turn_on: relay_status_led
+      output.turn_on: relay_status_led
     on_turn_off:
       output.turn_off: relay_status_led
 
