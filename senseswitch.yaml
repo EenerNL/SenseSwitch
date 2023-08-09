@@ -48,6 +48,11 @@ esp32_improv:
 improv_serial:
 
 
+# Time Configuration
+time:
+  - platform: homeassistant
+    id: ha_time
+
 # I2C Configuration for I2C-sensors
 i2c:
   sda: 21
@@ -146,34 +151,7 @@ sensor:
     update_interval: 5s
     on_value:
       then:
-        - if:
-            condition: # switch on conditions
-              or:
-                - and:
-                    - lambda: return id(switch_mode).state == "Lux + Presence";
-                    - lambda: return id(illuminance).state < id(switch_on_lux).state;
-                    - switch.is_off: relay
-                    - binary_sensor.is_on: mmwave_presence
-                - and:
-                    - lambda: return id(switch_mode).state == "Lux";
-                    - lambda: return id(illuminance).state < id(switch_on_lux).state;
-                    - switch.is_off: relay
-            then:
-              - switch.turn_on: relay
-        - if:
-            condition: # switch off conditions
-              or:
-                - and:
-                    - lambda: return id(switch_mode).state == "Lux + Presence";
-                    - lambda: return id(illuminance).state < id(switch_off_lux).state;
-                    - switch.is_on: relay
-                    - binary_sensor.is_off: mmwave_presence 
-                - and:
-                    - lambda: return id(switch_mode).state == "Lux";
-                    - lambda: return id(illuminance).state > id(switch_off_lux).state;
-                    - switch.is_on: relay
-            then:
-              - switch.turn_off: relay 
+        - script.execute: set_relay 
 
 # HLK-LD2410C Measured values
   - platform: ld2410
@@ -247,6 +225,9 @@ binary_sensor:
     has_target:
       name: "mmWave Presence"
       id: mmwave_presence
+      on_state:
+        then:
+          - script.execute: set_relay
     has_moving_target:
       name: "mmWave Moving Target"
     has_still_target:
@@ -376,3 +357,45 @@ select:
             - switch.is_on: relay
         then:
           - switch.turn_off: relay
+        else:
+          - script.execute: set_relay  
+
+
+# ----------- #
+### SCRIPTS ###
+script:
+
+# Turn on/off relay
+  - id: set_relay
+    then:
+      - if:
+          condition:  # Switch ON conditions
+            or:
+              - and:  # Mode = Lux + Presence
+                  - lambda: return id(switch_mode).state == "Lux + Presence";
+                  - lambda: return id(illuminance).state < id(switch_on_lux).state;
+                  - switch.is_off: relay
+                  - binary_sensor.is_on: mmwave_presence
+              - and:  # Mode = Lux
+                  - lambda: return id(switch_mode).state == "Lux";
+                  - lambda: return id(illuminance).state < id(switch_on_lux).state;
+                  - switch.is_off: relay
+          then:
+            - switch.turn_on: relay
+      - if:
+          condition:  # Switch OFF conditions
+            or:
+              - and:  # Mode = Lux + Presence
+                  - lambda: return id(switch_mode).state == "Lux + Presence";
+                  - lambda: return id(illuminance).state < id(switch_off_lux).state;
+                  - switch.is_on: relay
+                  - binary_sensor.is_off: mmwave_presence 
+              - and:  # Mode = Lux
+                  - lambda: return id(switch_mode).state == "Lux";
+                  - lambda: return id(illuminance).state > id(switch_off_lux).state;
+                  - switch.is_on: relay
+          then:
+            - switch.turn_off: relay
+  
+
+### END OF CONFIGURATION ###  
