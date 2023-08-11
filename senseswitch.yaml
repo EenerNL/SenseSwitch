@@ -10,12 +10,12 @@ esphome:
   friendly_name: "${friendly_name}"
   project:
     name: "EenerNL.SenseSwitch"
-    version: "2023.8.1"
+    version: "2023.8.2"
 
 esp32:
   board: esp32dev
   framework:
-    type: esp-idf
+    type: esp-idf 
 
 logger:
 api:
@@ -35,7 +35,7 @@ esp32_ble_tracker:
 bluetooth_proxy:
   active: true
 
-# web_server:
+# web_server:               ## Disabled to free up memory and more stability
 #  port: 80
 #  include_internal: true
 
@@ -48,12 +48,17 @@ esp32_improv:
 improv_serial:
 
 
-### I2C Configuration for I2C-sensors ###
+# Time Configuration
+time:
+  - platform: homeassistant
+    id: ha_time
+
+# I2C Configuration for I2C-sensors
 i2c:
   sda: 21
   scl: 22
  
-### UART Configuration for HLK-LD2410C ###
+# UART Configuration for HLK-LD2410C
 uart:
   tx_pin: GPIO17
   rx_pin: GPIO16
@@ -87,6 +92,7 @@ ld2410:
   g8_still_threshold: 20      #
   
 
+# ----------- #
 ### SENSORS ###
 sensor:
 
@@ -143,6 +149,9 @@ sensor:
     id: illuminance
     address: 0x23
     update_interval: 5s
+    on_value:
+      then:
+        - script.execute: set_relay 
 
 # HLK-LD2410C Measured values
   - platform: ld2410
@@ -162,8 +171,8 @@ sensor:
     name: "WiFi Signal"
     update_interval: 60s
 
- 
 
+# ------------ #
 ### TEXT SENSORS
 text_sensor:
 
@@ -173,6 +182,7 @@ text_sensor:
       name: WiFi SSID
 
 
+# ------------------ #
 ### BINARY SENSORS ###
 binary_sensor:
 
@@ -190,7 +200,7 @@ binary_sensor:
     on_press:
       if:
         condition:
-          binary_sensor.is_off: relay_mode
+          binary_sensor.is_off: relay_pulsemode
         then:
           - switch.toggle: relay
         else:
@@ -206,19 +216,25 @@ binary_sensor:
       mode:
         input: true
         pulldown: true
-    name: "Relay Mode"
-    id: relay_mode
+    name: "Relay Pulsemode"
+    id: relay_pulsemode
+    entity_category: CONFIG
 
 # HLK-LD2410 Occupancy sensors
   - platform: ld2410
     has_target:
       name: "mmWave Presence"
+      id: mmwave_presence
+      on_state:
+        then:
+          - script.execute: set_relay
     has_moving_target:
       name: "mmWave Moving Target"
     has_still_target:
       name: "mmWave Still Target"
 
 
+# ------------ #
 ### SWITCHES ###
 switch:
 
@@ -236,6 +252,7 @@ switch:
       output.turn_off: relay_status_led
 
 
+# ----------- #
 ### OUTPUTS ###
 output:
 
@@ -245,22 +262,38 @@ output:
     pin: 2
 
 
+# ----------- #
 ### NUMBERS ###
 number:
 
-# Setting for minimum lux-value
+# Lux-value for switching on light
   - platform: template
-    name: "Minimum Lux"
-    id: min_lux
+    name: "Switch on lux"
+    id: switch_on_lux
     entity_category: CONFIG
     mode: box
     unit_of_measurement: lx
-    initial_value: 100
+    initial_value: 30
+    restore_value: true
     min_value: 0
     max_value: 500
     step: 1
     optimistic: true
 
+# Lux-value for switching off light
+  - platform: template
+    name: "Switch off lux"
+    id: switch_off_lux
+    entity_category: CONFIG
+    mode: box
+    unit_of_measurement: lx
+    initial_value: 120
+    restore_value: true
+    min_value: 0
+    max_value: 500
+    step: 1
+    optimistic: true
+    
 # Setting temperature offset for calibrating temperature readings
   - platform: template
     name: "Temperature offset"
@@ -292,3 +325,71 @@ number:
     initial_value: 0
     icon: "mdi:water-percent"
     entity_category: CONFIG
+
+
+# ------------- #
+### SELECTORS ###
+select:
+
+# Mode
+  - platform: template
+    name: "Switch Mode"
+    id: switch_mode
+    optimistic: true
+    options:
+      - "Off"
+      - "Lux"
+      - "Lux + Presence"
+    entity_category: CONFIG
+    restore_value: true
+    on_value:
+      if:
+        condition:
+          and:
+            - lambda: return x == "Off";
+            - switch.is_on: relay
+        then:
+          - switch.turn_off: relay
+        else:
+          - script.execute: set_relay  
+
+
+# ----------- #
+### SCRIPTS ###
+script:
+
+# Turn on/off relay
+  - id: set_relay
+    then:
+      - if:
+          condition:  # Switch ON conditions
+            or:
+              - and:  # Mode = Lux + Presence
+                  - lambda: return id(switch_mode).state == "Lux + Presence";
+                  - lambda: return id(illuminance).state < id(switch_on_lux).state;
+                  - switch.is_off: relay
+                  - binary_sensor.is_on: mmwave_presence
+              - and:  # Mode = Lux
+                  - lambda: return id(switch_mode).state == "Lux";
+                  - lambda: return id(illuminance).state < id(switch_on_lux).state;
+                  - switch.is_off: relay
+          then:
+            - switch.turn_on: relay
+      - if:
+          condition:  # Switch OFF conditions
+            or:
+              - and:  # Mode = Lux + Presence
+                  - lambda: return id(switch_mode).state == "Lux + Presence";
+                  - switch.is_on: relay  
+                  - or:
+                    - lambda: return id(illuminance).state > id(switch_off_lux).state;
+                    - binary_sensor.is_off: mmwave_presence 
+              - and:  # Mode = Lux
+                  - lambda: return id(switch_mode).state == "Lux";
+                  - lambda: return id(illuminance).state > id(switch_off_lux).state;
+                  - switch.is_on: relay
+          then:
+            - switch.turn_off: relay
+  
+
+### END OF CONFIGURATION ###  

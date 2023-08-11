@@ -32,6 +32,8 @@ List of actions and wishes:
 - [x] PCB design
 - [x] Prototype on breadboard
 - [x] Writing basic ESPHome config
+- [x] Enable Bluetooth BLE proxy (change framework to esp-idf)
+- [ ] Testing hardware and finetunig of config
 - [ ] Finalize PCB design after testing
 - [ ] Review 3D-design of whole device
 - [ ] 3D-design mounting bracket for PCB's
@@ -43,5 +45,4 @@ List of actions and wishes:
     - [ ] Switching light based on presence and/or illuminance
     - [ ] Multiple options for the relay-functionality (light, ventilation, covers)
     - [ ] Config entities to configure the relay-functionality
-- [x] Enable Bluetooth BLE proxy (need to change framework?)
 - [ ] Get approval for the 'Made for ESPHome' program
