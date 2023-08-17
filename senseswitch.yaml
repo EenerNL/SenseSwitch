@@ -328,74 +328,58 @@ number:
       name: "mmWave Timeout"
     light_threshold:
       name: "mmWave Light threshold"
-      mode: box
     max_move_distance_gate:
       name: "mmWave Max. move distance gate"
       disabled_by_default: true
-      mode: box
     max_still_distance_gate:
       name: "mmWave Max. still distance gate"
       disabled_by_default: true
-      mode: box
     g0:
       move_threshold:
         name: "mmWave G0 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G0 still threshold"
         disabled_by_default: true
-        mode: box
     g1:
       move_threshold:
         name: "mmWave G1 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G1 still threshold"
         disabled_by_default: true
-        mode: box
     g2:
       move_threshold:
         name: "mmWave G2 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G2 still threshold"
         disabled_by_default: true
-        mode: box
     g3:
       move_threshold:
         name: "mmWave G3 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G3 still threshold"
         disabled_by_default: true
-        mode: box
     g4:
       move_threshold:
         name: "mmWave G4 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G4 still threshold"
         disabled_by_default: true
-        mode: box
     g5:
       move_threshold:
         name: "mmWave G5 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G5 still threshold"
         disabled_by_default: true
-        mode: box
     g6:
       move_threshold:
         name: "mmWave G6 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G6 still threshold"
         disabled_by_default: true
@@ -404,20 +388,16 @@ number:
       move_threshold:
         name: "mmWave G7 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G7 still threshold"
         disabled_by_default: true
-        mode: box
     g8:
       move_threshold:
         name: "mmWave G8 move threshold"
         disabled_by_default: true
-        mode: box
       still_threshold:
         name: "mmWave G8 still threshold"
         disabled_by_default: true
-        mode: box
 
 # Lux-value for switching on light
   - platform: template
