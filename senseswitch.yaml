@@ -383,7 +383,6 @@ number:
       still_threshold:
         name: "mmWave G6 still threshold"
         disabled_by_default: true
-        mode: box
     g7:
       move_threshold:
         name: "mmWave G7 move threshold"
