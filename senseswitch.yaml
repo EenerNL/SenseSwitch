@@ -10,7 +10,7 @@ esphome:
   friendly_name: "${friendly_name}"
   project:
     name: "EenerNL.SenseSwitch"
-    version: "2023.8.2"
+    version: "2023.8.3"
 
 esp32:
   board: esp32dev
@@ -60,6 +60,7 @@ i2c:
  
 # UART Configuration for HLK-LD2410C
 uart:
+  id: ld2410_uart
   tx_pin: GPIO17
   rx_pin: GPIO16
   baud_rate: 256000
@@ -68,28 +69,8 @@ uart:
 
 # HLK-LD2410C Configuration
 ld2410:
-  timeout: 30s
-  id: mmwave
-  max_move_distance: 6m
-  max_still_distance: 2.25m
-  g0_move_threshold: 50       # 0m
-  g0_still_threshold: 20      #
-  g1_move_threshold: 50       # 0m - 0.75m
-  g1_still_threshold: 20      #
-  g2_move_threshold: 40       # 0.75m - 1.5m
-  g2_still_threshold: 40      #
-  g3_move_threshold: 30       # 1.5m - 2.25m
-  g3_still_threshold: 40      #
-  g4_move_threshold: 20       # 2.25m - 3m
-  g4_still_threshold: 30      #
-  g5_move_threshold: 15       # 3m - 3.75m
-  g5_still_threshold: 30      #
-  g6_move_threshold: 15       # 3.75m - 4.5m
-  g6_still_threshold: 20      #
-  g7_move_threshold: 15       # 4.5m - 5.25m
-  g7_still_threshold: 20      #
-  g8_move_threshold: 15       # 5.25m - 6m
-  g8_still_threshold: 20      #
+  uart_id: ld2410_uart
+  throttle: 1000ms
   
 
 # ----------- #
@@ -164,7 +145,73 @@ sensor:
     still_energy:
       name: "mmWave Still Energy"
     detection_distance:
-      name: "mmWave Detection Distance"  
+      name: "mmWave Detection Distance"
+    light:
+      name: "mmWave Lightlevel"
+      disabled_by_default: true
+    g0:
+      move_energy:
+        name: "mmWave G0 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G0 still energy"
+        disabled_by_default: true
+    g1:
+      move_energy:
+        name: "mmWave G1 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G1 still energy"
+        disabled_by_default: true
+    g2:
+      move_energy:
+        name: "mmWave G2 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G2 still energy"
+        disabled_by_default: true
+    g3:
+      move_energy:
+        name: "mmWave G3 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G3 still energy"
+        disabled_by_default: true
+    g4:
+      move_energy:
+        name: "mmWave G4 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G4 still energy"
+        disabled_by_default: true
+    g5:
+      move_energy:
+        name: "mmWave G5 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G5 still energy"
+        disabled_by_default: true
+    g6:
+      move_energy:
+        name: "mmWave G6 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G6 still energy"
+        disabled_by_default: true
+    g7:
+      move_energy:
+        name: "mmWave G7 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G7 still energy"
+        disabled_by_default: true
+    g8:
+      move_energy:
+        name: "mmWave G8 move energy"
+        disabled_by_default: true
+      still_energy:
+        name: "mmWave G8 still energy"
+        disabled_by_default: true
 
 # Wifi signal
   - platform: wifi_signal
@@ -220,7 +267,7 @@ binary_sensor:
     id: relay_pulsemode
     entity_category: CONFIG
 
-# HLK-LD2410 Occupancy sensors
+# HLK-LD2410C Occupancy sensors
   - platform: ld2410
     has_target:
       name: "mmWave Presence"
@@ -251,6 +298,15 @@ switch:
     on_turn_off:
       output.turn_off: relay_status_led
 
+# HLK-LD2410C config swiches
+  - platform: ld2410
+    engineering_mode:
+      name: "mmWave Engineering mode"
+      disabled_by_default: true
+    bluetooth:
+      name: "mmWave Bluetooth"
+      disabled_by_default: true
+
 
 # ----------- #
 ### OUTPUTS ###
@@ -265,6 +321,82 @@ output:
 # ----------- #
 ### NUMBERS ###
 number:
+
+# HLK-LD2410C config numbers
+  - platform: ld2410
+    timeout:
+      name: "mmWave Timeout"
+    light_threshold:
+      name: "mmWave Light threshold"
+    max_move_distance_gate:
+      name: "mmWave Max. move distance gate"
+      disabled_by_default: true
+    max_still_distance_gate:
+      name: "mmWave Max. still distance gate"
+      disabled_by_default: true
+    g0:
+      move_threshold:
+        name: "mmWave G0 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G0 still threshold"
+        disabled_by_default: true
+    g1:
+      move_threshold:
+        name: "mmWave G1 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G1 still threshold"
+        disabled_by_default: true
+    g2:
+      move_threshold:
+        name: "mmWave G2 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G2 still threshold"
+        disabled_by_default: true
+    g3:
+      move_threshold:
+        name: "mmWave G3 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G3 still threshold"
+        disabled_by_default: true
+    g4:
+      move_threshold:
+        name: "mmWave G4 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G4 still threshold"
+        disabled_by_default: true
+    g5:
+      move_threshold:
+        name: "mmWave G5 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G5 still threshold"
+        disabled_by_default: true
+    g6:
+      move_threshold:
+        name: "mmWave G6 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G6 still threshold"
+        disabled_by_default: true
+    g7:
+      move_threshold:
+        name: "mmWave G7 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G7 still threshold"
+        disabled_by_default: true
+    g8:
+      move_threshold:
+        name: "mmWave G8 move threshold"
+        disabled_by_default: true
+      still_threshold:
+        name: "mmWave G8 still threshold"
+        disabled_by_default: true
 
 # Lux-value for switching on light
   - platform: template
@@ -330,6 +462,12 @@ number:
 # ------------- #
 ### SELECTORS ###
 select:
+
+# HLK-LD2410C config selectors
+  - platform: ld2410
+    distance_resolution:
+      name: "mmWave Distance resolution"
+      disabled_by_default: true
 
 # Mode
   - platform: template
