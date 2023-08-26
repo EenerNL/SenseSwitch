@@ -10,7 +10,7 @@ esphome:
   friendly_name: "${friendly_name}"
   project:
     name: "EenerNL.SenseSwitch"
-    version: "2023.8.3"
+    version: "2023.8.4"
 
 esp32:
   board: esp32dev
@@ -146,6 +146,7 @@ sensor:
       name: "mmWave Still Energy"
     detection_distance:
       name: "mmWave Detection Distance"
+      id: mmwave_detection_distance
     light:
       name: "mmWave Lightlevel"
       disabled_by_default: true
@@ -279,6 +280,38 @@ binary_sensor:
       name: "mmWave Moving Target"
     has_still_target:
       name: "mmWave Still Target"
+
+# Zones
+  - platform: template
+    name: "mmWave Zone 1"
+    device_class: occupancy
+    icon: mdi:motion-sensor
+    lambda: |-
+      if ((id(mmwave_presence).state) && (id(mmwave_detection_distance).state < id(mmwave_z1_end).state)) {
+        return true;
+      } else {
+        return false;
+      }
+  - platform: template
+    name: "mmWave Zone 2"
+    device_class: occupancy
+    icon: mdi:motion-sensor
+    lambda: |-
+      if ((id(mmwave_presence).state) && ((id(mmwave_z1_end).state < id(mmwave_detection_distance).state) && (id(mmwave_detection_distance).state < id(mmwave_z2_end).state))) {
+        return true;
+      } else {
+        return false;
+      }
+  - platform: template
+    name: "mmWave Zone 3"
+    device_class: occupancy
+    icon: mdi:motion-sensor
+    lambda: |-
+      if ((id(mmwave_presence).state) && ((id(mmwave_z2_end).state < id(mmwave_detection_distance).state) && (id(mmwave_detection_distance).state < id(mmwave_z3_end).state))) {
+        return true;
+      } else {
+        return false;
+      }
 
 
 # ------------ #
@@ -456,6 +489,54 @@ number:
     restore_value: true
     initial_value: 0
     icon: "mdi:water-percent"
+    entity_category: CONFIG
+
+# Setting ending of zone 1 occupancy
+  - platform: template
+    name: "mmWave End Zone 1"
+    id: mmwave_z1_end
+    unit_of_measurement: "cm"
+    min_value: 0
+    max_value: 600
+    step: 1
+    mode: box
+    update_interval: never
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    icon: "mdi:arrow-collapse-right"
+    entity_category: CONFIG
+
+# Setting ending of zone 2 occupancy
+  - platform: template
+    name: "mmWave End Zone 2"
+    id: mmwave_z2_end
+    unit_of_measurement: "cm"
+    min_value: 0
+    max_value: 600
+    step: 1
+    mode: box
+    update_interval: never
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    icon: "mdi:arrow-collapse-right"
+    entity_category: CONFIG
+
+# Setting ending of zone 3 occupancy
+  - platform: template
+    name: "mmWave End Zone 3"
+    id: mmwave_z3_end
+    unit_of_measurement: "cm"
+    min_value: 0
+    max_value: 600
+    step: 1
+    mode: box
+    update_interval: never
+    optimistic: true
+    restore_value: true
+    initial_value: 0
+    icon: "mdi:arrow-collapse-right"
     entity_category: CONFIG
 
 
