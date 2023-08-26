@@ -10,7 +10,7 @@ esphome:
   friendly_name: "${friendly_name}"
   project:
     name: "EenerNL.SenseSwitch"
-    version: "2023.8.4"
+    version: "2023.9.0"
 
 esp32:
   board: esp32dev
