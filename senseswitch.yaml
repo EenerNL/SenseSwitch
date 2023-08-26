@@ -286,7 +286,7 @@ binary_sensor:
     name: "mmWave Zone 1"
     device_class: occupancy
     lambda: |-
-      if (id(mmwave_presence).state == 'on') and (id(mmwave_detection_distance).state < id(mmwave_z1_end).state) {
+      if (id(mmwave_detection_distance).state < id(mmwave_z1_end).state) {
         return true;
       } else {
         return false;
@@ -295,7 +295,7 @@ binary_sensor:
     name: "mmWave Zone 2"
     device_class: occupancy
     lambda: |-
-      if (id(mmwave_presence).state == 'on') and (id(mmwave_z1_end).state < id(mmwave_detection_distance).state < id(mmwave_z2_end).state) {
+      if (id(mmwave_z1_end).state < id(mmwave_detection_distance).state < id(mmwave_z2_end).state) {
         return true;
       } else {
         return false;
@@ -304,7 +304,7 @@ binary_sensor:
     name: "mmWave Zone 3"
     device_class: occupancy
     lambda: |-
-      if (id(mmwave_presence).state == 'on') and (id(mmwave_z2_end).state < id(mmwave_detection_distance).state < id(mmwave_z3_end).state) {
+      if (id(mmwave_z2_end).state < id(mmwave_detection_distance).state < id(mmwave_z3_end).state) {
         return true;
       } else {
         return false;
