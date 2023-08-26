@@ -146,6 +146,7 @@ sensor:
       name: "mmWave Still Energy"
     detection_distance:
       name: "mmWave Detection Distance"
+      id: mmwave_detection_distance
     light:
       name: "mmWave Lightlevel"
       disabled_by_default: true
