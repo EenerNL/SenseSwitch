@@ -314,6 +314,14 @@ binary_sensor:
       }
 
 
+# ----------- #
+### BUTTONS ###
+button:
+  - platform: ld2410
+    restart:
+      name: "mmWave Restart"
+
+
 # ------------ #
 ### SWITCHES ###
 switch:
