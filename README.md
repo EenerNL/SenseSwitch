@@ -1,6 +1,7 @@
 # SenseSwitch
 A smart switch with a lot of sensors inside of it!
 
+![Alt text](https://github.com/EenerNL/SenseSwitch/blob/824df799aed78f401938bf037afd985649354855/3D%20design/Fusion_assembly_1.PNG "SenseSwitch 3D design")
 
 ## Overview
 The ultimate goal is that it can replace a standard light switch. And it is not just a smart switch, but you get a whole lot of sensors within it.
