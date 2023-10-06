@@ -36,13 +36,13 @@ List of actions and wishes:
 - [x] Testing hardware and finetunig of config
 - [x] Finalize PCB design after testing
 - [x] Review 3D-design of whole device
-- [ ] 3D-design mounting bracket for PCB's
+- [x] 3D-design mounting bracket for PCB's
 - [x] Finalize PCB design and order PCB's
-- [ ] Assebly of all components
-- [ ] Testing of first prototype
+- [ ] Assembly of all components
+- [ ] Testing of first complete prototype
 - [ ] Get approval for the 'Made for ESPHome' program
-- [ ] Add more functionality to the config
+- [x] Add more functionality to the config
     - [x] Add config entities for setting temperature and humidity offset
     - [x] Switching light based on presence and/or illuminance
     - [x] Config entities to configure the relay-functionality
-    - [ ] Multiple options for the relay-functionality (light, ventilation, covers)
+    - [x] Add zones for mmwWave
