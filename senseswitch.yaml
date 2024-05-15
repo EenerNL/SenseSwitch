@@ -78,7 +78,7 @@ ld2410:
 sensor:
 
 # BM280 Temperature, Humidity and Pressure
-  - platform: bme280
+  - platform: bme280_i2c
     temperature:
       name: "Temperature"
       id: temperature
