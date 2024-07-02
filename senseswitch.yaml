@@ -10,16 +10,17 @@ esphome:
   friendly_name: "${friendly_name}"
   project:
     name: "EenerNL.SenseSwitch"
-    version: "2024.5.1"
+    version: "2024.7.1"
 
 esp32:
   board: esp32dev
   framework:
-    type: esp-idf 
+    type: esp-idf
 
 logger:
 api:
 ota:
+  platform: esphome
 captive_portal:
 
 wifi:
